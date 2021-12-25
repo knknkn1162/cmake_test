@@ -23,3 +23,32 @@ jobs:
                 name: docker push
                 command: |
                     docker push << pipeline.parameters.cmake_test_image >> .
+    test:
+        docker:
+            - image: << pipeline.parameters.msgdemo_image >>
+              auth:
+                  username: ${DOCKERHUB_USER}
+                  password: ${DOCKERHUB_PASSWORD}
+        working_directory: /app
+        steps:
+            - checkout
+            - run:
+                name: create trvmsg_demo.ke
+                command: |
+                    mkdir -p build
+                    cd build
+                    cmake ..
+                    make
+                    make install
+
+workflows:
+    build:
+        jobs:
+            - build:
+                context:
+                    - dockerhub
+            - test:
+                requires:
+                    - build
+                context:
+                    - dockerhub
