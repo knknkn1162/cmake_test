@@ -22,7 +22,7 @@ jobs:
             - run:
                 name: docker push
                 command: |
-                    docker push << pipeline.parameters.cmake_test_image >> .
+                    docker push << pipeline.parameters.cmake_test_image >>
     test:
         docker:
             - image: << pipeline.parameters.cmake_test_image >>
