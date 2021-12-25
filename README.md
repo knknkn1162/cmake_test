@@ -1,7 +1,19 @@
+# cmake_test
+
+# setup and build
+
+
+This repo supports Circle CI. See the log.
+
+```sh
+git clone https://github.com/knknkn1162/cmake_test
+docker pull knknkn1162/cmake_test:ubuntu_focal
+docker run -it -v $(pwd)/cmake_test /app -w /app --rm knknkn1162/cmake_test:ubuntu_focal
 ```
-git clone 
-docker build -t mycmake .
-docker run -it -v $(pwd):/app -w /app mycmake
+
+In docker container:
+
+```
 mkdir -p build
 cd build
 cmake ..
@@ -9,9 +21,17 @@ make
 make install
 ```
 
+# cmake tips
+
+```sh
+# in knknkn1162/cmake_test:ubuntu_focal
+# cmake --version
+cmake version 3.16.3
+```
+
 # variables
 
-    When `make` under `add_subdirectory(tool1 build.tool1)`
+When `make` under `add_subdirectory(tool1 build.tool1)`
 
 ```
 (top) <= ${CMAKE_SOURCE_DIR}
@@ -27,8 +47,3 @@ make install
 # subdirectory
 
 ## when contains CMakeLists.txt(tools1)
-
-```
-# copy tools to ./build/build.tools1 and build with cmake
-add_subdirectory(tool1 build.tool1)
-```
