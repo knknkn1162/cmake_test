@@ -4,17 +4,24 @@ include(ExternalProject)
 find_package(Git REQUIRED)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
-# target_sources(app PRIVATE src/mod2/*.c)
-# a.outを作成する際にlibgreetings.aをリンク
-# target_link_libraries(mycmd greetings)
 
-# function(copy_src src_dir)
-#     set(target_dir ${CMAKE_CURRENT_BINARY_DIR}/build.${src_dir})
-#     add_custom_command(OUTPUT ${target_dir} COMMAND mkdir -p ${target_dir})
-#     add_custom_target(copy_src_${src_dir} DEPENDS ${src_dir} ${target_dir}
-#     COMMAND rsync -r ${CMAKE_SOURCE_DIR}/${src_dir}/ ${target_dir}
-#   )
-# endfunction()
+add_custom_target("build")
+function(build_src src_dir)
+    set(target_dir ${CMAKE_CURRENT_BINARY_DIR}/build.${src_dir})
+    add_custom_command(OUTPUT ${target_dir} COMMAND mkdir -p ${target_dir})
+    add_custom_target(copy_src_${src_dir} DEPENDS ${src_dir} ${target_dir}
+        COMMAND rsync -r ${CMAKE_SOURCE_DIR}/${src_dir}/ ${target_dir}
+    )
+    add_custom_target(build_src_${src_dir}
+        DEPENDS copy_src_${src_dir} ${target_dir}
+        COMMAND make -C ${target_dir}
+    )
+
+    add_dependencies(build build_src_${src_dir})
+    install(FILES ${target_dir}/lib${src_dir}.a DESTINATION ${CMAKE_BINARY_DIR}/lib)
+endfunction()
+
+build_src(tool2)
 
 add_subdirectory(tool1 build.tool1)
 
@@ -37,6 +44,7 @@ function(build_external_repo target_name tag prefix)
       BINARY_DIR build.ext1
       #BUILD_IN_SOURCE TRUE
       # Install Step Options:
+      INSTALL_DIR lib
       INSTALL_COMMAND make install
       # Test Step Options:
       ## TEST_COMMAND: default

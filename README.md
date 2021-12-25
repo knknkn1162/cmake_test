@@ -7,8 +7,9 @@ This repo supports Circle CI. See the log.
 
 ```sh
 git clone https://github.com/knknkn1162/cmake_test
+cd cmake_test
 docker pull knknkn1162/cmake_test:ubuntu_focal
-docker run -it -v $(pwd)/cmake_test /app -w /app --rm knknkn1162/cmake_test:ubuntu_focal
+docker run -it -v $(pwd):/app -w /app --rm knknkn1162/cmake_test:ubuntu_focal
 ```
 
 In docker container:
@@ -17,8 +18,7 @@ In docker container:
 mkdir -p build
 cd build
 cmake ..
-make
-make install
+make build install
 ```
 
 # cmake tips
@@ -44,6 +44,22 @@ When `make` under `add_subdirectory(tool1 build.tool1)`
     `-- include
 ```
 
-# subdirectory
+# how to build srcs
 
 ## when contains CMakeLists.txt(tools1)
+
+## when using external repo
+
+`cmake ..` command generates directories below. See also https://cmake.org/cmake/help/latest/module/ExternalProject.html#external-project-definition
+```
+./build
+|
+|-- build.ext1 <= <BINARY_DIR(custom)>
+|
+|-- external <= <PREFIX>
+|   |-- src
+|   |   |-- build_external_repo_external1 <= <SOURCE_DIR>
+|   |   `-- build_external_repo_external1-stamp <= <STAMP_DIR>
+|   `-- tmp <= <TMP_DIR>
+`-- lib <= <INSTALL_DIR(custom)>
+```
