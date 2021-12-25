@@ -38,7 +38,7 @@ jobs:
                     mkdir -p build
                     cd build
                     cmake ..
-                    make
+                    make build
                     make install
             - run:
                 name: upload
