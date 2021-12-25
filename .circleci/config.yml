@@ -40,6 +40,13 @@ jobs:
                     cmake ..
                     make
                     make install
+            - run:
+                name: upload
+                command: |
+                    mkdir -p /tmp/artifacts
+                    cp -r ./build/lib /tmp/artifacts
+            - store_artifacts:
+                path: /tmp/artifacts
 
 workflows:
     build:
