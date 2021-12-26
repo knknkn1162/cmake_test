@@ -39,7 +39,11 @@ jobs:
                     cd build
                     cmake ..
                     make build
-                    make install
+                    make install install_external1 install_external2
+            - run:
+                name: `make install` check
+                command:
+                    find lib -type f | diff - ./tests/lib_check.txt
             - run:
                 name: upload
                 command: |
