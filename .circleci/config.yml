@@ -43,7 +43,7 @@ jobs:
             - run:
                 name: check installation
                 command:
-                    find ./build/lib -type f | diff - ./tests/lib_check.txt
+                    find ./build/lib -type f -printf "%f\n" | diff - ./tests/lib_check.txt
             - run:
                 name: upload
                 command: |

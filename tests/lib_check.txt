@@ -1,4 +1,4 @@
-lib/libextproj1.a
-lib/libextproj2.a
-lib/libtool1.a
-lib/libtool2.a
+libextproj1.a
+libextproj2.a
+libtool1.a
+libtool2.a
