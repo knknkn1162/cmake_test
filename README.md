@@ -1,5 +1,10 @@
 # cmake_test
 
++ tool1 .. contains CMakeLists.txt
++ tool2 .. contains Makefile(raw)
++ [ext1](https://github.com/knknkn1162/cmake_test_external1) .. contains CMakeLists.txt
++ [ext2](https://github.com/knknkn1162/cmake_test_external2) .. contains Makefile(raw)
+
 # setup and build
 
 
