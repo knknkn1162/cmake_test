@@ -41,7 +41,7 @@ jobs:
                     make build
                     make install install_external1 install_external2
             - run:
-                name: `make install` check
+                name: check installation
                 command:
                     find lib -type f | diff - ./tests/lib_check.txt
             - run:
